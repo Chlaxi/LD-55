@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -9,16 +10,19 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField]
     private Transform selectionArea;
+    [SerializeField]
+    private Transform CommandFlag;
+
     private Camera cam;
     private Vector3 startPos;
-    List<Unit> targets;
+    List<Unit> units;
     bool isSelectingMultiple = false;
     bool selectionIsHostile = false;
     
-    void Start()
+    void Awake()
     {
         cam = Camera.main;
-        targets = new List<Unit>();
+        units = new List<Unit>();
         DisableSelectionArea();
     }
 
@@ -51,16 +55,59 @@ public class PlayerController : MonoBehaviour
             ClearTargets();
             SelectUnits(currentMousePos);
         }
+
+        if (Input.GetMouseButtonUp(1))
+        {
+            UnitCommand(currentMousePos);
+        }
     }
 
+    // Consider layermask
+    private void UnitCommand(Vector3 mousePos)
+    {
+        if (units.Count < 1)
+        {
+            Debug.Log("No units selected");
+            return;
+        }
+
+        if (selectionIsHostile)
+        {
+            Debug.Log("Can`t issue commmands to hostile units");
+            return;
+        }
+
+        Collider2D[] colliderArray = Physics2D.OverlapPointAll(mousePos);
+        Vector3 targetPos = mousePos;
+        foreach (Collider2D collider in colliderArray)
+        {
+            Debug.Log(collider);
+            Unit unit = collider.GetComponent<Unit>();
+            if (unit == null)
+            {
+                continue;
+            }
+
+            targetPos = unit.transform.position;
+            break;
+        }
+
+        targetPos.z = 0;
+
+        foreach(Unit unit in units)
+        {
+            // TODO: Change flag to be specific based on command type
+            // TODO: Set formation
+            unit.SetCommand(targetPos);
+        }
+        SetCommandFlag(targetPos);
+    }
+     
+    // Consider layermask
     private void SelectUnits(Vector3 mousePosition)
     {
             selectionIsHostile = false;
-
-
             Collider2D[] colliderArray = Physics2D.OverlapAreaAll(startPos, mousePosition);
-
-
 
             foreach (Collider2D collider in colliderArray)
             {
@@ -76,7 +123,7 @@ public class PlayerController : MonoBehaviour
                     if (!unit.gameObject.tag.Equals("Player"))
                         continue;
                 }
-                targets.Add(unit);
+                units.Add(unit);
                 unit.SelectUnit();
                 selectionIsHostile = unit.gameObject.tag.Equals("Enemy");
                 if (!isSelectingMultiple)
@@ -85,22 +132,22 @@ public class PlayerController : MonoBehaviour
 
         isSelectingMultiple = false;
         DisableSelectionArea();
-        Debug.Log(string.Format("Selected {0} objects", targets.Count));
+        Debug.Log(string.Format("Selected {0} objects", units.Count));
             if (selectionIsHostile)
                 Debug.Log("Selected hostile unit");
     }
 
     private void ClearTargets()
     {
-        if (targets.IsUnityNull() || targets.Count < 1)
+        if (units.IsUnityNull() || units.Count < 1)
             return;
 
-        foreach (Unit unit in targets)
+        foreach (Unit unit in units)
         {
             unit.DeselectUnit();
         }
 
-        targets.Clear();
+        units.Clear();
     }
 
     private Vector3 GetMouseWorldPos()
@@ -109,6 +156,19 @@ public class PlayerController : MonoBehaviour
         Vector3 point = cam.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, cam.nearClipPlane));
 
         return point;
+    }
+
+    private void SetCommandFlag(Vector3? flagPosition = null)
+    {
+        if (flagPosition == null)
+        {
+            CommandFlag.gameObject.SetActive(false);
+            return;
+        }
+
+        CommandFlag.gameObject.SetActive(true);
+        CommandFlag.position = flagPosition.Value;
+        Debug.Log(($"Setting command position to {0}, {1}", flagPosition.Value.x, flagPosition.Value.y));
     }
 
     private void DisableSelectionArea()
