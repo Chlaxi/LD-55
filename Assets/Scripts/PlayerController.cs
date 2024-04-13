@@ -79,6 +79,7 @@ public class PlayerController : MonoBehaviour
 
         Collider2D[] colliderArray = Physics2D.OverlapPointAll(mousePos);
         Vector3 targetPos = mousePos;
+        Unit target = null;
         foreach (Collider2D collider in colliderArray)
         {
             Debug.Log(collider);
@@ -89,6 +90,7 @@ public class PlayerController : MonoBehaviour
             }
 
             targetPos = unit.transform.position;
+            target = unit;
             break;
         }
 
@@ -98,7 +100,13 @@ public class PlayerController : MonoBehaviour
         {
             // TODO: Change flag to be specific based on command type
             // TODO: Set formation
-            unit.SetCommand(targetPos);
+            if (target != null)
+            {
+                unit.SetCommand(targetPos, target);
+            } else
+            {
+                unit.SetCommand(targetPos);
+            }
         }
         SetCommandFlag(targetPos);
     }
