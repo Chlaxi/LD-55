@@ -12,7 +12,8 @@ public class Unit : MonoBehaviour
     Queue<Vector2> path;
     Vector2 currentWaypoint = Vector2.zero;
     Color highlightColour;
-    Unit target;
+    public Energy energy;
+    Interactable target;
     [SerializeField] float interactRange;
     float interactRangeSqr;
     [SerializeField]
@@ -25,6 +26,7 @@ public class Unit : MonoBehaviour
         renderer2D = GetComponent<SpriteRenderer>();
         movement = GetComponent<MoveVelocity>();
         rg = GetComponent<Rigidbody2D>();
+        energy = GetComponent<Energy>();
         path = new Queue<Vector2>();
         state = States.Idling; 
 
@@ -105,7 +107,7 @@ public class Unit : MonoBehaviour
         renderer2D.color = Color.white;
     }
 
-    public void SetCommand(Vector3 targetPosition, Unit target)
+    public void SetCommand(Vector3 targetPosition, Interactable target)
     {
         SetCommand(targetPosition);
         this.target = target;
@@ -115,7 +117,6 @@ public class Unit : MonoBehaviour
     {
         target = null;
         path.Clear();
-        Debug.Log(($"Command given to {0} for destination {1}", gameObject.name, targetPosition));
         Vector2 targetVector = new Vector2(targetPosition.x, targetPosition.y);
         Pathfinding(targetVector);
         NextWaypoint();
@@ -131,13 +132,19 @@ public class Unit : MonoBehaviour
     {
         if (target == null)
         {
-            Debug.Log("No target. Setting back to idle");
             state = States.Idling;
             return;
         }
-        Debug.Log(($"Interacted with {0}", target.name));
+
         interactTimer = interactSpeed;
-        //TODO: Damage target
+        
+        if (!energy.ChangeEnergy(target.EnergyCost))
+        {
+            target = null;
+            state = States.Idling;
+            return;
+        }
+        target.Interact();
     }
     private bool NextWaypoint()
     {

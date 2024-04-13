@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.LowLevel;
@@ -17,7 +18,6 @@ public class PlayerController : MonoBehaviour
     private Vector3 startPos;
     List<Unit> units;
     bool isSelectingMultiple = false;
-    bool selectionIsHostile = false;
     
     void Awake()
     {
@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
-            ClearTargets();
+            ClearSelection();
             SelectUnits(currentMousePos);
         }
 
@@ -67,30 +67,23 @@ public class PlayerController : MonoBehaviour
     {
         if (units.Count < 1)
         {
-            Debug.Log("No units selected");
-            return;
-        }
-
-        if (selectionIsHostile)
-        {
-            Debug.Log("Can`t issue commmands to hostile units");
             return;
         }
 
         Collider2D[] colliderArray = Physics2D.OverlapPointAll(mousePos);
         Vector3 targetPos = mousePos;
-        Unit target = null;
+        Interactable target = null;
         foreach (Collider2D collider in colliderArray)
         {
             Debug.Log(collider);
-            Unit unit = collider.GetComponent<Unit>();
-            if (unit == null)
+            Interactable res = collider.GetComponent<Interactable>();
+            if (res == null)
             {
                 continue;
             }
 
-            targetPos = unit.transform.position;
-            target = unit;
+            targetPos = res.transform.position;
+            target = res;
             break;
         }
 
@@ -114,12 +107,10 @@ public class PlayerController : MonoBehaviour
     // Consider layermask
     private void SelectUnits(Vector3 mousePosition)
     {
-            selectionIsHostile = false;
             Collider2D[] colliderArray = Physics2D.OverlapAreaAll(startPos, mousePosition);
 
             foreach (Collider2D collider in colliderArray)
             {
-                Debug.Log(collider);
                 Unit unit = collider.GetComponent<Unit>();
                 if (unit == null)
                 {
@@ -133,19 +124,15 @@ public class PlayerController : MonoBehaviour
                 }
                 units.Add(unit);
                 unit.SelectUnit();
-                selectionIsHostile = unit.gameObject.tag.Equals("Enemy");
                 if (!isSelectingMultiple)
                     break;
             }
 
         isSelectingMultiple = false;
         DisableSelectionArea();
-        Debug.Log(string.Format("Selected {0} objects", units.Count));
-            if (selectionIsHostile)
-                Debug.Log("Selected hostile unit");
     }
 
-    private void ClearTargets()
+    private void ClearSelection()
     {
         if (units.IsUnityNull() || units.Count < 1)
             return;
@@ -176,7 +163,6 @@ public class PlayerController : MonoBehaviour
 
         CommandFlag.gameObject.SetActive(true);
         CommandFlag.position = flagPosition.Value;
-        Debug.Log(($"Setting command position to {0}, {1}", flagPosition.Value.x, flagPosition.Value.y));
     }
 
     private void DisableSelectionArea()
