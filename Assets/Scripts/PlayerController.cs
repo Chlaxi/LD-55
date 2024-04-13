@@ -7,6 +7,8 @@ using UnityEngine.InputSystem.LowLevel;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField]
+    private Transform selectionArea;
     private Camera cam;
     private Vector3 startPos;
     List<Unit> targets;
@@ -17,6 +19,7 @@ public class PlayerController : MonoBehaviour
     {
         cam = Camera.main;
         targets = new List<Unit>();
+        DisableSelectionArea();
     }
 
     // TODO: Draw selection rectangle
@@ -34,7 +37,13 @@ public class PlayerController : MonoBehaviour
         {
             float sqrLen = Vector3.SqrMagnitude(currentMousePos - startPos);
             if(sqrLen > 0.1f)
+            {
                 isSelectingMultiple = true;
+                // Draw selection area
+                SetSelectionArea(currentMousePos);
+            }
+                
+
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -73,8 +82,10 @@ public class PlayerController : MonoBehaviour
                 if (!isSelectingMultiple)
                     break;
             }
-            isSelectingMultiple = false;
-            Debug.Log(string.Format("Selected {0} objects", targets.Count));
+
+        isSelectingMultiple = false;
+        DisableSelectionArea();
+        Debug.Log(string.Format("Selected {0} objects", targets.Count));
             if (selectionIsHostile)
                 Debug.Log("Selected hostile unit");
     }
@@ -100,9 +111,23 @@ public class PlayerController : MonoBehaviour
         return point;
     }
 
-    private void OnDrawGizmos()
+    private void DisableSelectionArea()
     {
-        if(Input.GetMouseButton(0) && isSelectingMultiple)
-            Gizmos.DrawLine(startPos, GetMouseWorldPos());
+        selectionArea.gameObject.SetActive(false);
+    }
+
+    private void SetSelectionArea(Vector3 currentMousePos)
+    {
+        selectionArea.gameObject.SetActive(true);
+
+        Vector3 selectionLowerLeft = new Vector3(
+            Mathf.Min(startPos.x, currentMousePos.x),
+            Mathf.Min(startPos.y, currentMousePos.y));
+        Vector3 selectionTopRight = new Vector3(
+            Mathf.Max(startPos.x, currentMousePos.x),
+            Mathf.Max(startPos.y, currentMousePos.y));
+
+        selectionArea.position = selectionLowerLeft;
+        selectionArea.localScale = selectionTopRight - selectionLowerLeft;
     }
 }
