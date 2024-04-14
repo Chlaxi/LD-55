@@ -9,6 +9,7 @@ public class Unit : MonoBehaviour
     private UnitStateMachine stateMachine;
     public Tasks Task { get; private set; } 
 
+    private Healthbar healthbar;
     SpriteRenderer renderer2D;
     Queue<Vector2> path;
     Vector2 currentWaypoint = Vector2.zero;

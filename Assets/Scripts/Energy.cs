@@ -9,10 +9,18 @@ public class Energy : MonoBehaviour
     private int maxEnergy = 100;
     private int currentEnergy;
 
+    private Healthbar healthbar;
+
     private void Awake()
     {
+        healthbar = GetComponent<Healthbar>();
         //Get stats from ScriptableObject
         currentEnergy = maxEnergy;
+    }
+
+    void Start()
+    {
+        healthbar.ChangeHealth(maxEnergy / 100 * currentEnergy);
     }
 
     public bool ChangeEnergy(int energy)
@@ -28,6 +36,7 @@ public class Energy : MonoBehaviour
             currentEnergy = maxEnergy;
         Debug.Log(isLoss ? $"lost {energy} energy" : $"gained {energy} energy");
         Debug.Log($"{currentEnergy}/{maxEnergy} energy");
+        healthbar.ChangeHealth(maxEnergy/100*currentEnergy);
         return true;
     }
 
