@@ -10,8 +10,9 @@ public class UnitIdleState : UnitBaseState
 
     public override void Enter()
     {
-        Debug.Log($"{stateMachine.gameObject.name} entered Idle state");
-        //Check current task and set command.
+#if UNITY_EDITOR
+        stateMachine.Energy.healthbar.SetDebugStateText("Idling");
+#endif
     }
 
     public override void FixedTick(float deltaTime)

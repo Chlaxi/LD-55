@@ -24,4 +24,14 @@ public class Healthbar : MonoBehaviour
         fill.color = Color.Lerp(lowColour, highColour, p);
 
     }
+
+#if UNITY_EDITOR
+    [SerializeField]
+    private Text debugStateText;
+
+    public void SetDebugStateText(string state)
+    {
+        debugStateText.text = state;
+    }
+#endif
 }

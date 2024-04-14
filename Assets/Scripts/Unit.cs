@@ -5,9 +5,11 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
     public enum Tasks { None, Rest, Gather } // Might have to expand on gather
-    
+
     private UnitStateMachine stateMachine;
-    public Tasks Task { get; private set; } 
+    public Tasks Task { get; private set; }
+    [field: SerializeField]
+    public UnitStats Stats { get; private set; }
 
     private Healthbar healthbar;
     SpriteRenderer renderer2D;

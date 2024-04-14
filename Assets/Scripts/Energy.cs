@@ -9,7 +9,7 @@ public class Energy : MonoBehaviour
     private int maxEnergy = 100;
     private int currentEnergy;
 
-    private Healthbar healthbar;
+    public Healthbar healthbar;
 
     private void Awake()
     {

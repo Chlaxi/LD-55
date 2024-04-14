@@ -12,7 +12,9 @@ public class UnitMoveState : UnitBaseState
 
     public override void Enter()
     {
-        Debug.Log($"{stateMachine.gameObject.name} entered Move state");
+#if UNITY_EDITOR
+        stateMachine.Energy.healthbar.SetDebugStateText("Moving");
+#endif
         currentWaypoint = stateMachine.Unit.GetCurrentWaypoint();
 
     }

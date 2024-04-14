@@ -13,7 +13,9 @@ public class UnitRestState : UnitBaseState
 
     public override void Enter()
     {
-        Debug.Log($"{stateMachine.gameObject.name} entered Rest state");
+#if UNITY_EDITOR
+        stateMachine.Energy.healthbar.SetDebugStateText("Resting");
+#endif
         regenRate = 3f; // Base this on stats?
         timer = regenRate; 
     }

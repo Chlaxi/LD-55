@@ -12,7 +12,9 @@ public class UnitInteractState : UnitBaseState
 
     public override void Enter()
     {
-        Debug.Log($"{stateMachine.gameObject.name} entered Interact state");
+#if UNITY_EDITOR
+        stateMachine.Energy.healthbar.SetDebugStateText("Interacting");
+#endif
         interactRate = 3f; // Base this on stats?
         timer = interactRate;
         if (stateMachine.Unit.Target == null)
@@ -65,7 +67,13 @@ public class UnitInteractState : UnitBaseState
 
     private void Interact()
     {
-        if (stateMachine.Unit.Target == null)
+        if (!stateMachine.Unit.Target.IsActive())
+        {
+            Debug.Log("Target is not active. Switching to Idle state");
+            return;
+        }
+        
+            if (stateMachine.Unit.Target == null)
         {
             stateMachine.Unit.SetTask(Unit.Tasks.None);
             stateMachine.SwitchState(new UnitIdleState(stateMachine));
@@ -79,6 +87,6 @@ public class UnitInteractState : UnitBaseState
 
         timer = interactRate;
 
-        stateMachine.Unit.Target.Interact();
+        stateMachine.Unit.Target.Interact(stateMachine.Unit.Stats);
     }
 }
