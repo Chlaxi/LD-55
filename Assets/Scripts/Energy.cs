@@ -37,4 +37,20 @@ public class Energy : MonoBehaviour
         bool result = rawResult >= 0;
         return result;
     }
+
+    public int GetEnergy()
+    {
+        return currentEnergy;
+    }
+
+    public int GetMaxEnergy()
+    {
+        return maxEnergy;
+    }
+
+    public bool IsAboveThreshold()
+    {
+        int threshold = Mathf.FloorToInt(maxEnergy / 100 * 30);
+        return currentEnergy >= threshold;        
+    }
 }

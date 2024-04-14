@@ -4,96 +4,39 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    private enum States { Idling, Moving, Interacting }
+    public enum Tasks { None, Rest, Gather } // Might have to expand on gather
+    
+    private UnitStateMachine stateMachine;
+    public Tasks Task { get; private set; } 
 
     SpriteRenderer renderer2D;
-    Rigidbody2D rg;
-    private MoveVelocity movement;
     Queue<Vector2> path;
     Vector2 currentWaypoint = Vector2.zero;
     Color highlightColour;
-    public Energy energy;
-    Interactable target;
+    public Interactable Target { get; private set; }
+
     [SerializeField] float interactRange;
-    float interactRangeSqr;
+    public float InteractRangeSqr { get; private set; }
     [SerializeField]
     private float interactSpeed;
     private float interactTimer;
-    private States state;
 
     private void Awake()
     {
+        stateMachine = GetComponent<UnitStateMachine>();
         renderer2D = GetComponent<SpriteRenderer>();
-        movement = GetComponent<MoveVelocity>();
-        rg = GetComponent<Rigidbody2D>();
-        energy = GetComponent<Energy>();
         path = new Queue<Vector2>();
-        state = States.Idling; 
 
-        interactRangeSqr = interactRange * interactRange;
+        InteractRangeSqr = interactRange * interactRange;
 
         switch (gameObject.tag)
         {
-            case "Enemy":
-                highlightColour = Color.red;
-                break;
             case "Player":
                 highlightColour = Color.green;
                 break;
             default:
                 highlightColour = Color.yellow;
                 break;
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        if (target != null)
-        {
-            Vector2 targetPos = target.rg.position;
-            float targetSqrDist = Vector2.SqrMagnitude(targetPos - rg.position);
-            if (targetSqrDist <= interactRangeSqr)
-            {
-                if (state.Equals(States.Interacting))
-                {
-                    if (interactTimer < 0)
-                        Interact();
-
-                    interactTimer -= Time.fixedDeltaTime;
-                }
-                else
-                {
-                    state = States.Interacting;
-                    movement.Stop();
-                }
-            }
-            else
-            {
-                if (Vector2.SqrMagnitude(targetPos - currentWaypoint) > interactRangeSqr)
-                {
-                    Debug.Log("target moved away, recalculating path");
-                    SetCommand(targetPos, target);
-                }
-            }
-        }
-
-        if (!state.Equals(States.Moving))
-            return;
-
-        float sqrDist = Vector2.SqrMagnitude(currentWaypoint - rg.position);
-        if (sqrDist < 0.025f) {
-            Debug.Log("Destination reached");
-            if (!NextWaypoint())
-            {
-                movement.Stop();
-                rg.position = currentWaypoint;
-                state = States.Idling;
-            }
-        }
-        else
-        {
-            Vector3 dir = currentWaypoint - rg.position;
-            movement.SetDirection(dir.normalized);
         }
     }
 
@@ -107,21 +50,31 @@ public class Unit : MonoBehaviour
         renderer2D.color = Color.white;
     }
 
-    public void SetCommand(Vector3 targetPosition, Interactable target)
+    public void SetCommand(Vector3 targetPosition, Interactable target, Tasks task = Tasks.None)
     {
-        SetCommand(targetPosition);
-        this.target = target;
+        SetCommand(targetPosition, task);
+        Target = target;
+        // Set Designated task based on task type
     }
 
-    public void SetCommand(Vector3 targetPosition)
+    public void SetCommand(Vector3 targetPosition, Tasks task = Tasks.None)
     {
-        target = null;
+        Target = null;
+        SetTask(task);
         path.Clear();
         Vector2 targetVector = new Vector2(targetPosition.x, targetPosition.y);
         Pathfinding(targetVector);
         NextWaypoint();
+        stateMachine.SwitchState(new UnitMoveState(stateMachine));
     }
     
+    public void RestCommand()
+    {
+        // Revisit to walk towards nearest resting spot.
+        SetTask(Unit.Tasks.Rest);
+        stateMachine.SwitchState(new UnitRestState(stateMachine));
+    }
+
     private void Pathfinding(Vector2 targetPosition)
     {
         //TODO: Implement A*
@@ -130,32 +83,28 @@ public class Unit : MonoBehaviour
 
     private void Interact()
     {
-        if (target == null)
-        {
-            state = States.Idling;
-            return;
-        }
-
-        interactTimer = interactSpeed;
-        
-        if (!energy.ChangeEnergy(target.EnergyCost))
-        {
-            target = null;
-            state = States.Idling;
-            return;
-        }
-        target.Interact();
+        Debug.Log($"Interacting with {gameObject.name}");
     }
-    private bool NextWaypoint()
+
+    public bool NextWaypoint()
     {
         Debug.Log(path.Count);
         if (path.Count > 0)
         {
             currentWaypoint = path.Dequeue();
-            state = States.Moving;
             return true;
         }
 
         return false;
+    }
+
+    public Vector2 GetCurrentWaypoint()
+    {
+        return currentWaypoint;
+    }
+
+    public void SetTask(Tasks task)
+    {
+        Task = task;
     }
 }

@@ -73,6 +73,7 @@ public class PlayerController : MonoBehaviour
         Collider2D[] colliderArray = Physics2D.OverlapPointAll(mousePos);
         Vector3 targetPos = mousePos;
         Interactable target = null;
+
         foreach (Collider2D collider in colliderArray)
         {
             Debug.Log(collider);
@@ -95,7 +96,7 @@ public class PlayerController : MonoBehaviour
             // TODO: Set formation
             if (target != null)
             {
-                unit.SetCommand(targetPos, target);
+                unit.SetCommand(targetPos, target, Unit.Tasks.Gather);
             } else
             {
                 unit.SetCommand(targetPos);
