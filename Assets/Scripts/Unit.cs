@@ -54,6 +54,7 @@ public class Unit : MonoBehaviour
     {
         SetCommand(targetPosition, task);
         Target = target;
+
         // Set Designated task based on task type
     }
 
@@ -70,9 +71,7 @@ public class Unit : MonoBehaviour
     
     public void RestCommand()
     {
-        // Revisit to walk towards nearest resting spot.
-        SetTask(Unit.Tasks.Rest);
-        stateMachine.SwitchState(new UnitRestState(stateMachine));
+        SetCommand(GameController.Instance.SummoningCircle.position,  Unit.Tasks.Rest);
     }
 
     private void Pathfinding(Vector2 targetPosition)

@@ -82,7 +82,6 @@ public class PlayerController : MonoBehaviour
             {
                 continue;
             }
-
             targetPos = res.transform.position;
             target = res;
             break;
@@ -96,6 +95,10 @@ public class PlayerController : MonoBehaviour
             // TODO: Set formation
             if (target != null)
             {
+                if (target.tag == "SummoningCircle") {
+                    unit.RestCommand();
+                    continue;
+                }
                 unit.SetCommand(targetPos, target, Unit.Tasks.Gather);
             } else
             {
