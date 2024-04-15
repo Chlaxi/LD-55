@@ -20,7 +20,7 @@ public class UnitInteractState : UnitBaseState
         stateMachine.Energy.healthbar.SetDebugStateText("Interacting");
 #endif
         target = stateMachine.Unit.Target;
-        interactRate = target.InstantInteraction ? 0.01f : stateMachine.Unit.Stats.dexterity;
+        interactRate = target.InstantInteraction ? 0.01f : stateMachine.Unit.Stats.interactionSpeed;
         timer = interactRate;
         if (target == null)
             stateMachine.SwitchState(new UnitIdleState(stateMachine));

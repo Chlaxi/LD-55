@@ -12,13 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46838a936bf6e2f47b24ded71da69b07, type: 3}
   m_Name: LiteStats
   m_EditorClassIdentifier: 
-  movementSpeed: 4
-  mineRate: 3
-  fishRate: 3
-  burnRate: 3
-  harvestRate: 3
-  strenght: 2
-  dexterity: 2
+  movementSpeed: 3
+  strength: 3
+  dexterity: 6
   canCollectLunar: 0
   lunarRate: 10
   canCollectVoid: 0

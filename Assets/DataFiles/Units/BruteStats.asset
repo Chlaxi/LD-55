@@ -13,13 +13,9 @@ MonoBehaviour:
   m_Name: BruteStats
   m_EditorClassIdentifier: 
   movementSpeed: 2
-  mineRate: 3
-  fishRate: 3
-  burnRate: 3
-  harvestRate: 3
-  strenght: 1
-  dexterity: 1
+  strength: 8
+  dexterity: 7
   canCollectLunar: 0
   lunarRate: 10
-  canCollectVoid: 0
-  voidRate: 10
+  canCollectVoid: 1
+  voidRate: 30

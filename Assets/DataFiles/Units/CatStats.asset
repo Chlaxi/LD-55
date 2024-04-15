@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 46838a936bf6e2f47b24ded71da69b07, type: 3}
-  m_Name: PlayerStats
+  m_Name: CatStats
   m_EditorClassIdentifier: 
-  movementSpeed: 4
-  strength: 4
-  dexterity: 4
-  canCollectLunar: 0
-  lunarRate: 10
+  movementSpeed: 5
+  strength: 1
+  dexterity: 2
+  canCollectLunar: 1
+  lunarRate: 30
   canCollectVoid: 0
   voidRate: 10

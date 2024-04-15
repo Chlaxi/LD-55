@@ -17,12 +17,7 @@ public class Unit : MonoBehaviour
     Vector2 currentWaypoint = Vector2.zero;
     Color highlightColour;
     public Interactable Target { get; private set; }
-
-    [SerializeField] float interactRange;
     public float InteractRangeSqr { get; private set; }
-    [SerializeField]
-    private float interactSpeed;
-    private float interactTimer;
 
     private void Awake()
     {
@@ -30,7 +25,7 @@ public class Unit : MonoBehaviour
         renderer2D = GetComponent<SpriteRenderer>();
         path = new Queue<Vector2>();
 
-        InteractRangeSqr = interactRange * interactRange;
+        InteractRangeSqr = Stats.interactionRange * Stats.interactionRange;
 
         switch (gameObject.tag)
         {
