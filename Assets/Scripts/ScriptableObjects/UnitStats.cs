@@ -10,7 +10,7 @@ public class UnitStats : ScriptableObject
     public float fishRate = 3f;
     public float burnRate = 3f;
     public float harvestRate = 3f;
-    public int strenght = 1;
+    public int strength = 1;
     public int dexterity = 1;
 
     public bool canCollectLunar = false;

@@ -17,7 +17,7 @@ MonoBehaviour:
   fishRate: 3
   burnRate: 3
   harvestRate: 3
-  strenght: 5
+  strength: 4
   dexterity: 5
   canCollectLunar: 0
   lunarRate: 10

@@ -83,12 +83,7 @@ public class CropResource : Interactable
         return needsWater;
     }
 
-    protected override void Deactivate()
-    {
-       
-        
-
-    }
+    protected override void Deactivate() {}
 
     private void SetSprite()
     {

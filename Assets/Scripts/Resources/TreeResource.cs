@@ -52,7 +52,7 @@ public class TreeResource : Interactable
         if (!IsActive())
             return;
 
-        overflowDamage = stats.strenght;
+        overflowDamage = stats.strength;
         health -= overflowDamage;
 
         int n = 0;
