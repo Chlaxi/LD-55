@@ -8,8 +8,6 @@ public class AshResource : Interactable
     FurnaceStorage furnaceStorage;
 
     [SerializeField]
-    private int requiredWood = 1;
-    [SerializeField]
     private float processTime;
     private float timer;
 
