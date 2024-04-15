@@ -1,11 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
+    [Serializable]
+    public struct ResourceImages
+    {
+        public Resources resource;
+        public Sprite resourcesSprites;
+    }
+
     public enum Resources { Wood, Ore, Fish, Ash, Wind, Crops, Lunar, Void }
 
     private static GameController instance = null;
@@ -39,6 +48,8 @@ public class GameController : MonoBehaviour
     }
 
     private Dictionary<Resources, int> resources = new Dictionary<Resources, int>();
+    [SerializeField]
+    private ResourceImages[] resourceImages;
 
     [SerializeField]
     private Text wood;
@@ -131,5 +142,11 @@ public class GameController : MonoBehaviour
         }
 
         textElement.text = amount.ToString();
+
+    }
+    public Sprite GetResourceSprite(Resources resource)
+    {
+        var res = resourceImages.Where(x => x.resource.Equals(resource)).First();
+        return res.resourcesSprites;
     }
 }

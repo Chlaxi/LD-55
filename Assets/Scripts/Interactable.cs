@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Interactable : MonoBehaviour
+public abstract class Interactable : MonoBehaviour, IInteractible
 {
+    [field: SerializeField]
+    public bool InstantInteraction { get; private set; } = false;
     public Rigidbody2D rg {  get; private set; }
     protected SpriteRenderer renderer2D;
     protected Color colour;
