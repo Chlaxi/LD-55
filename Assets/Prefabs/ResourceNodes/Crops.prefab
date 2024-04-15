@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ff9114337c5d4643ae3341a22230fae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <InstantInteraction>k__BackingField: 0
   energyCost: 2
   resourceYield: 1
   resource: 5
@@ -109,13 +110,13 @@ MonoBehaviour:
   - {x: 3, y: 5}
   cropSprites:
   - {fileID: -1445343442, guid: b202feb9ac2fbac499c81d9f017dd460, type: 3}
-  - {fileID: 1082095512, guid: b202feb9ac2fbac499c81d9f017dd460, type: 3}
-  - {fileID: -10911844, guid: b202feb9ac2fbac499c81d9f017dd460, type: 3}
-  - {fileID: 1911641585, guid: b202feb9ac2fbac499c81d9f017dd460, type: 3}
+  - {fileID: 1407707121, guid: a8faf455b5290164782f9bb39f9d0348, type: 3}
+  - {fileID: 1466298228, guid: a8faf455b5290164782f9bb39f9d0348, type: 3}
+  - {fileID: -965555990, guid: a8faf455b5290164782f9bb39f9d0348, type: 3}
   soilRenderer: {fileID: 6453061109750230479}
   soilSprites:
-  - {fileID: 1887775743, guid: b202feb9ac2fbac499c81d9f017dd460, type: 3}
-  - {fileID: -918028335, guid: b202feb9ac2fbac499c81d9f017dd460, type: 3}
+  - {fileID: -179124955, guid: a8faf455b5290164782f9bb39f9d0348, type: 3}
+  - {fileID: -283004157, guid: a8faf455b5290164782f9bb39f9d0348, type: 3}
 --- !u!61 &2281488657795667121
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -261,7 +262,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1887775743, guid: b202feb9ac2fbac499c81d9f017dd460, type: 3}
+  m_Sprite: {fileID: -179124955, guid: a8faf455b5290164782f9bb39f9d0348, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

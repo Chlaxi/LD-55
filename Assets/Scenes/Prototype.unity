@@ -1783,14 +1783,14 @@ MonoBehaviour:
     resourcesSprites: {fileID: 0}
   - resource: 7
     resourcesSprites: {fileID: 0}
-  wood: {fileID: 732107721}
-  ore: {fileID: 2016139018}
-  crops: {fileID: 1687212080}
-  fish: {fileID: 172912492}
-  ash: {fileID: 1997237858}
-  wind: {fileID: 1391395793}
-  lunar: {fileID: 928137838}
-  Void: {fileID: 249575926}
+  wood: {fileID: 0}
+  ore: {fileID: 0}
+  crops: {fileID: 0}
+  fish: {fileID: 0}
+  ash: {fileID: 0}
+  wind: {fileID: 0}
+  lunar: {fileID: 0}
+  Void: {fileID: 0}
   <SummoningCircle>k__BackingField: {fileID: 1794136516}
 --- !u!1 &1997237856
 GameObject:
@@ -2481,6 +2481,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1109186507716708671, guid: bec38373d06631c4d8728814198245e1, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1157290314, guid: 769d598c06b80954baa8d644a30d85ff, type: 3}
     - target: {fileID: 2609012255194648245, guid: bec38373d06631c4d8728814198245e1, type: 3}
       propertyPath: m_Name
       value: Pool
@@ -2525,11 +2529,44 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5041469862750232704, guid: bec38373d06631c4d8728814198245e1, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2609012255194648245, guid: bec38373d06631c4d8728814198245e1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9051454959549209042}
   m_SourcePrefab: {fileID: 100100000, guid: bec38373d06631c4d8728814198245e1, type: 3}
+--- !u!1 &9051454959549209041 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2609012255194648245, guid: bec38373d06631c4d8728814198245e1, type: 3}
+  m_PrefabInstance: {fileID: 9051454959549209040}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &9051454959549209042
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9051454959549209041}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8e3c0b18372bcb74a998c11fde09caf5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
