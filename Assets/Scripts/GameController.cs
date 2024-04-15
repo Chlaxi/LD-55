@@ -1,8 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.PackageManager;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -56,21 +55,21 @@ public class GameController : MonoBehaviour
     private ResourceImages[] resourceImages;
 
     [SerializeField]
-    private Text wood;
+    private TextMeshProUGUI wood;
     [SerializeField]
-    private Text ore;
+    private TextMeshProUGUI ore;
     [SerializeField]
-    private Text crops;
+    private TextMeshProUGUI crops;
     [SerializeField]
-    private Text fish;
+    private TextMeshProUGUI fish;
     [SerializeField]
-    private Text ash;
+    private TextMeshProUGUI ash;
     [SerializeField]
-    private Text wind;
+    private TextMeshProUGUI wind;
     [SerializeField]
-    private Text lunar;
+    private TextMeshProUGUI lunar;
     [SerializeField]
-    private Text Void;
+    private TextMeshProUGUI Void;
 
 
     public Dictionary<Resources, int> GetResources()
@@ -143,7 +142,7 @@ public class GameController : MonoBehaviour
     private void UpdateUI(Resources resource)
     {
         int amount = resources[resource];
-        Text textElement = null;
+        TextMeshProUGUI textElement = null;
         switch(resource) { 
             case Resources.Ash:
                 textElement = ash; 
