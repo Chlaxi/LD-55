@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    public enum Resources { Wood, Ore, Fish, Ash, Wind, Lunar, Void }
+    public enum Resources { Wood, Ore, Fish, Ash, Wind, Crops, Lunar, Void }
 
     private static GameController instance = null;
 
@@ -24,6 +24,7 @@ public class GameController : MonoBehaviour
         resources.Add(Resources.Fish, 0);
         resources.Add(Resources.Wood, 0);
         resources.Add(Resources.Ore, 0);
+        resources.Add(Resources.Crops, 0);
         resources.Add(Resources.Lunar, 0);
         resources.Add(Resources.Void, 0);
         resources.Add(Resources.Wind, 0);
@@ -43,6 +44,8 @@ public class GameController : MonoBehaviour
     private Text wood;
     [SerializeField]
     private Text ore;
+    [SerializeField]
+    private Text crops;
     [SerializeField]
     private Text fish;
     [SerializeField]
@@ -107,6 +110,9 @@ public class GameController : MonoBehaviour
                 break;
             case Resources.Ore:
                 textElement = ore;
+                break;
+            case Resources.Crops:
+                textElement = crops;
                 break;
             case Resources.Void:
                 textElement = Void;
