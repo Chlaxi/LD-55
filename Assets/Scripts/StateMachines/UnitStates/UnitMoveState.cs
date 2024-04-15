@@ -17,11 +17,12 @@ public class UnitMoveState : UnitBaseState
         stateMachine.Energy.healthbar.SetDebugStateText("Moving");
 #endif
         currentWaypoint = stateMachine.Unit.GetCurrentWaypoint();
-
+        stateMachine.Animator.SetTrigger("Move");
     }
-
+    
     public override void FixedTick(float deltaTime)
     {
+        stateMachine.Unit.renderer2D.flipX = Mathf.Sign(stateMachine.Rigidbody2D.velocity.x) > 0;
         float sqrDist = Vector2.SqrMagnitude(currentWaypoint - stateMachine.Rigidbody2D.position);
         float range = stateMachine.Unit.Task == Unit.Tasks.Gather ?
             stateMachine.Unit.InteractRangeSqr : 0.025f;
@@ -67,7 +68,7 @@ public class UnitMoveState : UnitBaseState
 
     public override void Exit()
     {
-        Debug.Log($"{stateMachine.gameObject.name} leaving Move state");
+        stateMachine.Animator.ResetTrigger("Move");
     }
 
 }

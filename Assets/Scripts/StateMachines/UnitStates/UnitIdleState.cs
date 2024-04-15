@@ -13,6 +13,7 @@ public class UnitIdleState : UnitBaseState
 #if UNITY_EDITOR
         stateMachine.Energy.healthbar.SetDebugStateText("Idling");
 #endif
+        stateMachine.Animator.SetTrigger("Idle");
     }
 
     public override void FixedTick(float deltaTime)
@@ -26,6 +27,6 @@ public class UnitIdleState : UnitBaseState
 
     public override void Exit()
     {
-        Debug.Log($"{stateMachine.gameObject.name} leaving Idle state");
+        stateMachine.Animator.ResetTrigger("Idle");
     }
 }

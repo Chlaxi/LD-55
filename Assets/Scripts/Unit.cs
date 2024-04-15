@@ -7,12 +7,12 @@ public class Unit : MonoBehaviour
     public enum Tasks { None, Rest, Gather } // Might have to expand on gather
 
     private UnitStateMachine stateMachine;
-    public Tasks Task { get; private set; }
+    public Tasks Task { get; private set; } = Tasks.None;
     [field: SerializeField]
     public UnitStats Stats { get; private set; }
 
     private Healthbar healthbar;
-    SpriteRenderer renderer2D;
+    public SpriteRenderer renderer2D {get; private set; }
     Queue<Vector2> path;
     Vector2 currentWaypoint = Vector2.zero;
     Color highlightColour;

@@ -25,7 +25,7 @@ public class UnitInteractState : UnitBaseState
         if (target == null)
             stateMachine.SwitchState(new UnitIdleState(stateMachine));
 
-
+        stateMachine.Animator.SetTrigger("InteractLoop");
     }
 
     public override void FixedTick(float deltaTime)
@@ -67,7 +67,8 @@ public class UnitInteractState : UnitBaseState
 
     public override void Exit()
     {
-
+        stateMachine.Animator.ResetTrigger("Interact");
+        stateMachine.Animator.ResetTrigger("InteractLoop");
     }
 
     private void Interact()
@@ -93,5 +94,7 @@ public class UnitInteractState : UnitBaseState
         timer = interactRate;
 
         target.Interact(stateMachine.Unit.Stats);
+        stateMachine.Animator.SetTrigger("Interact");
+
     }
 }

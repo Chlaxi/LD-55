@@ -257,7 +257,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Stats>k__BackingField: {fileID: 11400000, guid: 648f49d9841cea34d937e7c25d8959ac, type: 2}
-  interactRange: 4
 --- !u!50 &2089617470461249477
 Rigidbody2D:
   serializedVersion: 4
@@ -324,7 +323,7 @@ Animator:
   m_GameObject: {fileID: 2194270367765922501}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bd792d0524e48444a91c4575efe7adfc, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
