@@ -2,39 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SummoningCircle : MonoBehaviour, IInteractible
+public class SummoningCircle : Interactable
 {
     [SerializeField]
-    private GameObject summonMenu;
-    [SerializeField]
-    private GameObject summons;
+    private NekonomiconUI summonMenu;
 
-    public void Interact(UnitStats stats)
+    public override void Interact(UnitStats stats)
     {
-        summonMenu.SetActive(true);
+        summonMenu.gameObject.SetActive(true);
     }
 
-    private bool CheckCost(CreatureStoreData.Price[] prices)
+    protected override void Respawn() { }
+
+    public override bool IsActive()
     {
-        foreach (var price in prices)
-        {
-            Debug.Log($"Costs {price.cost} {price.resource}");
-        }
-        // implement resource checking
-
-
         return true;
     }
 
-    public bool SpawnCreature(CreatureStoreData creature)
-    {
-        if(!CheckCost(creature.ResourceCost)) 
-            return false;
-
-        // Reduce resources
-
-        Instantiate(creature.Prefab);
-
-        return true;
-    }
+    protected override void Deactivate() { }
 }

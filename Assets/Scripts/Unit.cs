@@ -74,7 +74,7 @@ public class Unit : MonoBehaviour
     
     public void RestCommand()
     {
-        SetCommand(GameController.Instance.SummoningCircle.position,  Unit.Tasks.Rest);
+        SetCommand(GameController.Instance.SummoningCircle.transform.position,  Unit.Tasks.Rest);
     }
 
     private void Pathfinding(Vector2 targetPosition)

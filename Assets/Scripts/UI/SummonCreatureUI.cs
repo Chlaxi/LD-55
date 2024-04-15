@@ -21,6 +21,14 @@ public class SummonCreatureUI : MonoBehaviour
     GameObject resourcePrefab;
 
     GameObject summonPrefab;
+    NekonomiconUI nomicon;
+
+    private void Awake()
+    {
+        nomicon = GetComponentInParent<NekonomiconUI>();
+        if (nomicon == null)
+            Debug.LogWarning("Nekonomicon not found!");
+    }
 
     public void SetData(CreatureStoreData creatureData)
     {
@@ -37,9 +45,11 @@ public class SummonCreatureUI : MonoBehaviour
         summonPrefab = creatureData.Prefab;
     }
 
-    public bool SummonCreature()
+    public void SummonCreature()
     {
-        Debug.Log("Summoning creature!");
-        return true;
+        bool succes = GameController.Instance.SpawnCreature(creatureData);
+        if(succes)
+            nomicon.gameObject.SetActive(false);    
+        
     }
 }

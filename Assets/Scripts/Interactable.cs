@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Interactable : MonoBehaviour, IInteractible
+public abstract class Interactable : MonoBehaviour
 {
     [field: SerializeField]
     public bool InstantInteraction { get; private set; } = false;

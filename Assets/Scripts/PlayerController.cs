@@ -97,6 +97,8 @@ public class PlayerController : MonoBehaviour
             {
                 if (target.tag == "SummoningCircle") {
                     unit.RestCommand();
+                    if (unit.tag.Equals("Player"))
+                        target.Interact(unit.Stats);
                     continue;
                 }
                 unit.SetCommand(targetPos, target, Unit.Tasks.Gather);

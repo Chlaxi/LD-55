@@ -15,6 +15,9 @@ public class GameController : MonoBehaviour
         public Sprite resourcesSprites;
     }
 
+    [field: SerializeField]
+    public NekonomiconUI nekonomicon { get; private set; } 
+
     public enum Resources { Wood, Ore, Fish, Ash, Wind, Crops, Lunar, Void }
 
     private static GameController instance = null;
@@ -41,6 +44,7 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
+        nekonomicon.gameObject.SetActive(true); // Disables itself afterwards
         foreach (var resource in resources.Keys)
         {
             UpdateUI(resource);
@@ -87,11 +91,37 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
-            AddResource(Resources.Void, 1);
+        if (Input.GetKeyUp(KeyCode.B))
+        {
+            nekonomicon.gameObject.SetActive(!nekonomicon.gameObject.activeSelf);
+        }
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.L))
+        {
 
-        if (Input.GetKeyDown(KeyCode.D))
+            AddResource(Resources.Void, 1);
+            AddResource(Resources.Wind, 1);
+            AddResource(Resources.Wood, 1);
+            AddResource(Resources.Fish, 1);
+            AddResource(Resources.Crops, 1);
+            AddResource(Resources.Lunar, 1);
+            AddResource(Resources.Ore, 1);
+            AddResource(Resources.Ash, 1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+
             SpendResource(Resources.Void, 1);
+            SpendResource(Resources.Wind, 1);
+            SpendResource(Resources.Wood, 1);
+            SpendResource(Resources.Fish, 1);
+            SpendResource(Resources.Crops, 1);
+            SpendResource(Resources.Lunar, 1);
+            SpendResource(Resources.Ore, 1);
+            SpendResource(Resources.Ash, 1);
+        }
+#endif
     }
 
     public bool SpendResource(Resources resource, int value)
@@ -108,7 +138,7 @@ public class GameController : MonoBehaviour
     }
 
     [field: SerializeField]
-    public Transform SummoningCircle { get; private set; }
+    public SummoningCircle SummoningCircle { get; private set; }
 
     private void UpdateUI(Resources resource)
     {
@@ -148,5 +178,32 @@ public class GameController : MonoBehaviour
     {
         var res = resourceImages.Where(x => x.resource.Equals(resource)).First();
         return res.resourcesSprites;
+    }
+
+    private bool CheckCost(CreatureStoreData.Price[] prices)
+    {
+        foreach (var price in prices)
+        {
+            if(GetResource(price.resource) < price.cost)
+            {
+                Debug.Log($"Not enough {price.resource}");
+                return false;
+            }
+        }
+        return true;
+    }
+    public bool SpawnCreature(CreatureStoreData creature)
+    {
+        if (!CheckCost(creature.ResourceCost))
+            return false;
+
+        foreach (var price in creature.ResourceCost)
+        {
+            SpendResource(price.resource, price.cost);
+        }
+
+        Instantiate(creature.Prefab, SummoningCircle.transform.position, Quaternion.identity);
+
+        return true;
     }
 }

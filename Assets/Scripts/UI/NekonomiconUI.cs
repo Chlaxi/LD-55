@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class NekonomiconUI : MonoBehaviour
-{
+{ 
     [SerializeField]
     private GameObject creatureUIPrefab;
 
@@ -19,5 +20,6 @@ public class NekonomiconUI : MonoBehaviour
             GameObject creatureUI = Instantiate(creatureUIPrefab, content.transform);
             creatureUI.GetComponent<SummonCreatureUI>().SetData(creature);        
         }
+        gameObject.SetActive(false);
     }
 }
