@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using static UnityEditor.VersionControl.Asset;
 
 public class UnitMoveState : UnitBaseState
@@ -22,18 +23,20 @@ public class UnitMoveState : UnitBaseState
     public override void FixedTick(float deltaTime)
     {
         float sqrDist = Vector2.SqrMagnitude(currentWaypoint - stateMachine.Rigidbody2D.position);
-        if (sqrDist < 0.025f)
+        float range = stateMachine.Unit.Task == Unit.Tasks.Gather ?
+            stateMachine.Unit.InteractRangeSqr : 0.025f;
+        if (sqrDist < range)
         {
             Debug.Log("Destination reached");
             if (!stateMachine.Unit.NextWaypoint())
             {
                 stateMachine.Movement.Stop();
-                stateMachine.Rigidbody2D.position = currentWaypoint;
                 //Change state to idle, rest, or interact, depending on task.
                 switch(stateMachine.Unit.Task)
                 {
                     case Unit.Tasks.Rest:
                         stateMachine.SwitchState(new UnitRestState(stateMachine));
+                        stateMachine.Rigidbody2D.position = currentWaypoint;
                         break;
                     case Unit.Tasks.Gather:
                         stateMachine.SwitchState(new UnitInteractState(stateMachine));
@@ -41,6 +44,7 @@ public class UnitMoveState : UnitBaseState
                     case Unit.Tasks.None:
                     default:
                         stateMachine.SwitchState(new UnitIdleState(stateMachine));
+                        stateMachine.Rigidbody2D.position = currentWaypoint;
                         break;
 
 

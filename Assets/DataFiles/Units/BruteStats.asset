@@ -14,8 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 2
   strength: 8
-  dexterity: 7
-  canCollectLunar: 0
-  lunarRate: 10
-  canCollectVoid: 1
-  voidRate: 30
+  interactionSpeed: 4
+  interactionRange: 1.5
