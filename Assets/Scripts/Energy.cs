@@ -34,8 +34,7 @@ public class Energy : MonoBehaviour
         currentEnergy += energy;
         if(currentEnergy > maxEnergy)
             currentEnergy = maxEnergy;
-        Debug.Log(isLoss ? $"lost {energy} energy" : $"gained {energy} energy");
-        Debug.Log($"{currentEnergy}/{maxEnergy} energy");
+
         healthbar.ChangeHealth(maxEnergy/100*currentEnergy);
         return true;
     }

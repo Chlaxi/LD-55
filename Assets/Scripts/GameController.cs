@@ -63,6 +63,11 @@ public class GameController : MonoBehaviour
         return resources;
     }
 
+    public int GetResource(Resources resource)
+    {
+        return resources[resource];
+    }
+
     public void AddResource(Resources resource, int value)
     {
         resources[resource] += value;
