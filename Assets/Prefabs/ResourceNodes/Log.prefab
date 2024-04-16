@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2281488657795667121}
   - component: {fileID: 7951212301872212861}
   - component: {fileID: 4000877688359921729}
+  - component: {fileID: 1181051957029676093}
   m_Layer: 0
   m_Name: Log
   m_TagString: Enemy
@@ -76,8 +77,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 0.735849, g: 0.30436105, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 47dcb3b9ae30d6448a5ffc76868e9f82, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -122,7 +123,7 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.28866667}
+    pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
@@ -171,7 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b5ee5bc2e319234b8529baf84b29139, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rg: {fileID: 7951212301872212861}
+  <InstantInteraction>k__BackingField: 0
   energyCost: 5
   resourceYield: 1
   resource: 0
@@ -179,3 +180,24 @@ MonoBehaviour:
   baseHealth: 20
   baseHealthModifier: {x: 0, y: 15}
   chipHealthRange: {x: 2, y: 10}
+--- !u!95 &1181051957029676093
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2431454744803057021}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e71bc3e5ee38b9c4588e5363437484f8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

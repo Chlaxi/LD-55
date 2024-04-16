@@ -7,6 +7,8 @@ using UnityEngine;
 public class TreeResource : Interactable
 {
 
+    private Animator animator;
+
     [SerializeField]
     private Vector2 respawnTime;
     [SerializeField]
@@ -27,15 +29,16 @@ public class TreeResource : Interactable
 
     private void Start()
     {
+        animator = GetComponent<Animator>();
         Respawn();
     }
 
     protected override void Respawn()
     {
+        animator.SetBool("IsStump", false);
         int random = Mathf.CeilToInt(Random.Range(baseHealthModifier.x, baseHealthModifier.y));
         health = baseHealth + random;
         GenerateChipHealth();
-        renderer2D.color = colour;
     }
     
     private void GenerateChipHealth()
@@ -55,19 +58,10 @@ public class TreeResource : Interactable
         overflowDamage = stats.strength;
         health -= overflowDamage;
 
-        int n = 0;
         do
         {
             if (!IsActive())
             {
-                Debug.Log("Tree ran out of health. Exiting loop");
-                break;
-            }
-
-            n++;
-            if(n > 20)
-            {
-                Debug.LogError("OVER 20 ITERATIONS!");
                 break;
             }
             int damage = overflowDamage;
@@ -106,7 +100,6 @@ public class TreeResource : Interactable
     protected override void Deactivate()
     {
         timer = Random.Range(respawnTime.x, respawnTime.y);
-        Debug.Log($"Respawn timer set to {timer}");
-        renderer2D.color = Color.gray;
+        animator.SetBool("IsStump", true);
     }
 }

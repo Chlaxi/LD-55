@@ -6,18 +6,22 @@ using UnityEngine;
 public class AshResource : Interactable
 {
     FurnaceStorage furnaceStorage;
-
+    private Animator animator;
     [SerializeField]
     private float processTime;
     private float timer;
 
     private int ashes = 0;
 
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
+
     public bool StartFurnace(){
         if(IsBurning())
             return false;
-
-        renderer2D.color = Color.red;
+        animator.SetBool("IsActive", true);
         timer = processTime;
         return true;
     }
@@ -61,7 +65,7 @@ public class AshResource : Interactable
 
     protected override void Deactivate()
     {
-        renderer2D.color = colour;
+        animator.SetBool("IsActive", false);
     }
 
     protected override void Respawn()
