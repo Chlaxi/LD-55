@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class OreResource : Interactable
 {
+
+    private Animator animator;
     [SerializeField]
     private int health;
     private int chipHealth;
@@ -12,6 +14,7 @@ public class OreResource : Interactable
 
     private void Start()
     {
+        animator = GetComponent<Animator>();
         Respawn();
     }
 
@@ -33,6 +36,7 @@ public class OreResource : Interactable
         chipHealth -= damage;
         if(chipHealth <= 0)
         {
+            animator.SetTrigger("Hit");
             GameController.Instance.AddResource(resource, resourceYield);
             Respawn();
         }

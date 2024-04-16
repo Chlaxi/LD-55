@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46838a936bf6e2f47b24ded71da69b07, type: 3}
   m_Name: CatStats
   m_EditorClassIdentifier: 
-  movementSpeed: 5
+  movementSpeed: 4
   strength: 1
   interactionSpeed: 4
   interactionRange: 2

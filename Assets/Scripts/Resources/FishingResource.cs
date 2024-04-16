@@ -5,6 +5,11 @@ using UnityEngine;
 public class FishingResource : Interactable
 {
 
+    private Animator animator;
+
+    [SerializeField]
+    private float startOffset;
+
     [SerializeField]
     private Vector2 activeTime;
     private float activeTimer;
@@ -15,12 +20,14 @@ public class FishingResource : Interactable
 
     private void Start()
     {
-        Respawn();
+        animator = GetComponent<Animator>();
+        Deactivate();
+        respawnTimer = startOffset;
     }
     protected override void Respawn()
     {
         activeTimer = Random.Range(activeTime.x, activeTime.y);
-        renderer2D.color = colour;
+        animator.SetBool("IsActive", true);
     }
 
     private void Update()
@@ -58,7 +65,6 @@ public class FishingResource : Interactable
     protected override void Deactivate()
     {
         respawnTimer = Random.Range(respawnTime.x, respawnTime.y);
-        Debug.Log($"Respawn timer set to {respawnTimer}");
-        renderer2D.color = Color.gray;
+        animator.SetBool("IsActive", false);
     }
 }
